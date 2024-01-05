@@ -101,7 +101,7 @@ namespace SimpleExample
                     if (sysid != packet.sysid || compid != packet.compid)
                         continue;
 
-                    Console.WriteLine(packet.msgtypename);
+                    //Console.WriteLine(packet.msgtypename);
                     
                     if (packet.msgid == (byte)MAVLink.MAVLINK_MSG_ID.ATTITUDE)
                     //or
@@ -109,7 +109,7 @@ namespace SimpleExample
                     {
                         var att = (MAVLink.mavlink_attitude_t)packet.data;
 
-                        Console.WriteLine(att.pitch*57.2958 + " " + att.roll*57.2958);
+                        Console.WriteLine(att.pitch*57.2958 + " " + att.roll*57.2958 + " " + att.yaw);
                     }
                 }
                 catch

@@ -562,8 +562,8 @@ namespace MissionPlanner
 
         public void updateLayout(object sender, EventArgs e)
         {
-            MenuSimulation.Visible = DisplayConfiguration.displaySimulation;
-            MenuHelp.Visible = DisplayConfiguration.displayHelp;
+            //MenuSimulation.Visible = DisplayConfiguration.displaySimulation;
+            //MenuHelp.Visible = DisplayConfiguration.displayHelp;
             MissionPlanner.Controls.BackstageView.BackstageView.Advanced = DisplayConfiguration.isAdvancedMode;
 
             // force autohide on
@@ -747,9 +747,9 @@ namespace MissionPlanner
 
             MAVLinkInterface.gcssysid = (byte) Settings.Instance.GetByte("gcsid", MAVLinkInterface.gcssysid);
 
-            Form splash = Program.Splash;
+            //Form splash = Program.Splash;
 
-            splash?.Refresh();
+            //splash?.Refresh();
 
             Application.DoEvents();
 
@@ -769,9 +769,7 @@ namespace MissionPlanner
             //Init Theme table and load BurntKermit as a default
             ThemeManager.thmColor = new ThemeColorTable(); //Init colortable
             ThemeManager.thmColor.InitColors(); //This fills up the table with BurntKermit defaults.
-            ThemeManager.thmColor
-                .SetTheme(); //Set the colors, this need to handle the case when not all colors are defined in the theme file
-
+            ThemeManager.thmColor.SetTheme(); //Set the colors, this need to handle the case when not all colors are defined in the theme file
 
 
             if (Settings.Instance["theme"] == null)
@@ -831,7 +829,7 @@ namespace MissionPlanner
             }
             // ** Done
 
-            splash?.Refresh();
+            //splash?.Refresh();
             Application.DoEvents();
 
             // load last saved connection settings
@@ -866,11 +864,11 @@ namespace MissionPlanner
 
             MissionPlanner.Utilities.Tracking.cid = new Guid(Settings.Instance["guid"].ToString());
 
-            if (splash != null)
-            {
-                this.Text = splash?.Text;
-                titlebar = splash?.Text;
-            }
+            //if (splash != null)
+            //{
+            //    this.Text = splash?.Text;
+            //    titlebar = splash?.Text;
+            //}
 
             if (!MONO) // windows only
             {
@@ -1137,12 +1135,12 @@ namespace MissionPlanner
                 this.Icon = Icon.FromHandle(((Bitmap) Program.IconFile).GetHicon());
             }
 
-            MenuArduPilot.Image = new Bitmap(Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70,
-                (int) (200), 31);
-            MenuArduPilot.Width = MenuArduPilot.Image.Width;
+            //MenuArduPilot.Image = new Bitmap(Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70,
+                //(int) (200), 31);
+            //MenuArduPilot.Width = MenuArduPilot.Image.Width;
 
-            if (Program.Logo2 != null)
-                MenuArduPilot.Image = Program.Logo2;
+            //if (Program.Logo2 != null)
+               // MenuArduPilot.Image = Program.Logo2;
 
             Application.DoEvents();
 
@@ -1229,19 +1227,19 @@ namespace MissionPlanner
             MenuFlightData.Image = displayicons.fd;
             MenuFlightPlanner.Image = displayicons.fp;
             MenuInitConfig.Image = displayicons.initsetup;
-            MenuSimulation.Image = displayicons.sim;
+            //MenuSimulation.Image = displayicons.sim;
             MenuConfigTune.Image = displayicons.config_tuning;
             MenuConnect.Image = displayicons.connect;
-            MenuHelp.Image = displayicons.help;
+            //MenuHelp.Image = displayicons.help;
 
 
             MenuFlightData.ForeColor = ThemeManager.TextColor;
             MenuFlightPlanner.ForeColor = ThemeManager.TextColor;
             MenuInitConfig.ForeColor = ThemeManager.TextColor;
-            MenuSimulation.ForeColor = ThemeManager.TextColor;
+            //MenuSimulation.ForeColor = ThemeManager.TextColor;
             MenuConfigTune.ForeColor = ThemeManager.TextColor;
             MenuConnect.ForeColor = ThemeManager.TextColor;
-            MenuHelp.ForeColor = ThemeManager.TextColor;
+            //MenuHelp.ForeColor = ThemeManager.TextColor;
         }
 
         void adsb_UpdatePlanePosition(object sender, MissionPlanner.Utilities.adsb.PointLatLngAltHdg adsb)
@@ -3586,7 +3584,7 @@ namespace MissionPlanner
 
             this.ResumeLayout();
 
-            Program.Splash?.Close();
+            //Program.Splash?.Close();
 
             log.Info("appload time");
             MissionPlanner.Utilities.Tracking.AddTiming("AppLoad", "Load Time",
@@ -4628,14 +4626,14 @@ namespace MissionPlanner
 
         private void MenuArduPilot_Click(object sender, EventArgs e)
         {
-            try
-            {
-                System.Diagnostics.Process.Start("https://ardupilot.org/?utm_source=Menu&utm_campaign=MP");
-            }
-            catch
-            {
-                CustomMessageBox.Show("Failed to open url https://ardupilot.org");
-            }
+            //try
+            //{
+            //    System.Diagnostics.Process.Start("https://ardupilot.org/?utm_source=Menu&utm_campaign=MP");
+            //}
+            //catch
+            //{
+            //    CustomMessageBox.Show("Failed to open url https://ardupilot.org");
+            //}
         }
 
         private void connectionListToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4775,7 +4773,6 @@ namespace MissionPlanner
 
         private void MainV2_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

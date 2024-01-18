@@ -6260,5 +6260,20 @@ namespace MissionPlanner.GCSViews
                 CustomMessageBox.Show(Strings.CommandFailed + ex.ToString(), Strings.ERROR);
             }
         }
+
+        private void myButton7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void myButton8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void myButton6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

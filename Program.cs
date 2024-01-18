@@ -62,12 +62,12 @@ namespace MissionPlanner
         /// </summary>
         public static Image IconFile = null;
 
-        public static Splash Splash;
+        //public static Splash Splash;
 
         internal static Thread Thread;
 
         public static string[] args = new string[] { };
-        public static Bitmap SplashBG = null;
+        //public static Bitmap SplashBG = null;
 
         public static string[] names = new string[] {"VVVVZ"};
         public static bool MONO = false;
@@ -231,8 +231,8 @@ namespace MissionPlanner
                 IconFile = MissionPlanner.Properties.Resources.mpdesktop.ToBitmap();
             }
 
-            if (File.Exists(Settings.GetRunningDirectory() + "splashbg.png")) // 600*375
-                SplashBG = new Bitmap(Settings.GetRunningDirectory() + "splashbg.png");
+            //if (File.Exists(Settings.GetRunningDirectory() + "splashbg.png")) // 600*375
+            //    SplashBG = new Bitmap(Settings.GetRunningDirectory() + "splashbg.png");
 
             try
             {
@@ -260,27 +260,27 @@ namespace MissionPlanner
                 log.Error(ex);
             }
 
-            Splash = new MissionPlanner.Splash();
-            if (SplashBG != null)
-            {
-                Splash.BackgroundImage = SplashBG;
-                Splash.pictureBox1.Visible = false;
-            }
+            //Splash = new MissionPlanner.Splash();
+            //if (SplashBG != null)
+            //{
+            //    Splash.BackgroundImage = SplashBG;
+            //    Splash.pictureBox1.Visible = false;
+            //}
 
-            Console.WriteLine("IconFile");
-            if (IconFile != null)
-                Splash.Icon = Icon.FromHandle(((Bitmap) IconFile).GetHicon());
+            //Console.WriteLine("IconFile");
+            //if (IconFile != null)
+            //    Splash.Icon = Icon.FromHandle(((Bitmap) IconFile).GetHicon());
 
-            string strVersion = File.Exists("version.txt")
-                ? File.ReadAllText("version.txt")
-                : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Splash.Text = name + " " + Application.ProductVersion + " build " + strVersion;
-            Console.WriteLine("Splash.Show()");
-            Splash.Show();
+            //string strVersion = File.Exists("version.txt")
+            //    ? File.ReadAllText("version.txt")
+            //    : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            //Splash.Text = name + " " + Application.ProductVersion + " build " + strVersion;
+            //Console.WriteLine("Splash.Show()");
+            //Splash.Show();
 
-            Console.WriteLine("Debugger.IsAttached " + Debugger.IsAttached);
-            if (Debugger.IsAttached)
-                Splash.TopMost = false;
+            //Console.WriteLine("Debugger.IsAttached " + Debugger.IsAttached);
+            //if (Debugger.IsAttached)
+            //    Splash.TopMost = false;
 
             Console.WriteLine("Application.DoEvents");
             Application.DoEvents();
@@ -352,9 +352,9 @@ namespace MissionPlanner
             Tracking.boundsWidth = Screen.PrimaryScreen.Bounds.Width;
             Tracking.boundsHeight = Screen.PrimaryScreen.Bounds.Height;
 
-            Console.WriteLine("Setup Settings.Instance.UserAgent");
-            Settings.Instance.UserAgent = Application.ProductName + " " + Application.ProductVersion + " (" +
-                                          Environment.OSVersion?.VersionString + ")";
+            //Console.WriteLine("Setup Settings.Instance.UserAgent");
+            //Settings.Instance.UserAgent = Application.ProductName + " " + Application.ProductVersion + " (" +
+            //                              Environment.OSVersion?.VersionString + ")";
 
             Console.WriteLine("Setup check gdal dir");
             // optionally add gdal support
@@ -395,16 +395,16 @@ namespace MissionPlanner
 
             }
 
-            if (name == "VVVVZ")
-            {
-                // set pw
-                Settings.Instance["password"] = "viDQSk/lmA2qEE8GA7SIHqu0RG2hpkH973MPpYO87CI=";
-                Settings.Instance["password_protect"] = "True";
-                // prevent wizard
-                Settings.Instance["newuser"] = "11/02/2014";
-                // invalidate update url
-                System.Configuration.ConfigurationManager.AppSettings["UpdateLocationVersion"] = "";
-            }
+            //if (name == "VVVVZ")
+            //{
+            //    // set pw
+            //    Settings.Instance["password"] = "viDQSk/lmA2qEE8GA7SIHqu0RG2hpkH973MPpYO87CI=";
+            //    Settings.Instance["password_protect"] = "True"; 
+            //    // prevent wizard
+            //    Settings.Instance["newuser"] = "11/02/2014";
+            //    // invalidate update url
+            //    System.Configuration.ConfigurationManager.AppSettings["UpdateLocationVersion"] = "";
+            //}
 
             Console.WriteLine("Setup CleanupFiles");
             CleanupFiles();
@@ -826,16 +826,16 @@ namespace MissionPlanner
 
                     }
 
-                    string postData = "message=" + Environment.OSVersion.VersionString + " " +
-                                      System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()
-                                      + " " + Application.ProductVersion
-                                      + "\nException " + ex.ToString().Replace('&', ' ').Replace('=', ' ')
-                                      + "\nStack: " + ex.StackTrace.ToString().Replace('&', ' ').Replace('=', ' ')
-                                      + "\nTargetSite " + ex.TargetSite + " " + ex.TargetSite.DeclaringType
-                                      + "\ndata " + data
-                                      + "\nmessage " + message.Replace('&', ' ').Replace('=', ' ')
-                                      + "\n\n" + processinfo;
-                    _ = Download.PostAsync("http://vps.oborne.me/mail.php", postData).ConfigureAwait(false);
+                    //string postData = "message=" + Environment.OSVersion.VersionString + " " +
+                    //                  System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()
+                    //                  + " " + Application.ProductVersion
+                    //                  + "\nException " + ex.ToString().Replace('&', ' ').Replace('=', ' ')
+                    //                  + "\nStack: " + ex.StackTrace.ToString().Replace('&', ' ').Replace('=', ' ')
+                    //                  + "\nTargetSite " + ex.TargetSite + " " + ex.TargetSite.DeclaringType
+                    //                  + "\ndata " + data
+                    //                  + "\nmessage " + message.Replace('&', ' ').Replace('=', ' ')
+                    //                  + "\n\n" + processinfo;
+                    //_ = Download.PostAsync("http://vps.oborne.me/mail.php", postData).ConfigureAwait(false);
                 }
                 catch (Exception exp)
                 {

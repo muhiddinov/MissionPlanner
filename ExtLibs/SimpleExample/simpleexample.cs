@@ -143,7 +143,6 @@ namespace SimpleExample
                     }
                 }
             }
-
             throw new Exception("No packet match found");
         }
 
@@ -155,17 +154,8 @@ namespace SimpleExample
             req.target_component = 1;
 
             req.command = (ushort)MAVLink.MAV_CMD.COMPONENT_ARM_DISARM;
-
             req.param1 = armed ? 0 : 1;
             armed = !armed;
-            /*
-            req.param2 = p2;
-            req.param3 = p3;
-            req.param4 = p4;
-            req.param5 = p5;
-            req.param6 = p6;
-            req.param7 = p7;
-            */
 
             byte[] packet = mavlink.GenerateMAVLinkPacket10(MAVLink.MAVLINK_MSG_ID.COMMAND_LONG, req);
 
@@ -235,11 +225,9 @@ namespace SimpleExample
                 lock (readlock)
                 {
                     serialPort1.Write(packet, 0, packet.Length);
-
                     var ack2 = readsomedata<MAVLink.mavlink_mission_ack_t>(sysid, compid);
                     if ((MAVLink.MAV_MISSION_RESULT) ack2.type != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
                     {
-
                     }
                 }
 

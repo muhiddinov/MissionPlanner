@@ -4379,15 +4379,9 @@ namespace MissionPlanner
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                System.Diagnostics.Process.Start(
-                    "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mich146%40hotmail%2ecom&lc=AU&item_name=Michael%20Oborne&no_note=0&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest");
-            }
-            catch
-            {
-                CustomMessageBox.Show("Link open failed. check your default webpage association");
-            }
+            string[] ports = SerialPort.GetPortNames();
+            comPortMenu.Items.Clear();
+            comPortMenu.Items.AddRange(ports);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -4771,8 +4765,82 @@ namespace MissionPlanner
             }
         }
 
+        private bool port_conn = false;
+
+        private void SerialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            string data = this.serialPort.ReadLine().Trim();
+            log.Info(data);
+            string filename = null;
+            if (data.IndexOf("P1") >= 0)
+                filename = Settings.Instance["zonea"];
+            else if (data.IndexOf("P2") >= 0)
+                filename = Settings.Instance["zoneb"];
+            else if (data.IndexOf("P3") >= 0)
+                filename = Settings.Instance["zonec"];
+            else if (data.IndexOf("P4") >= 0)
+                filename = Settings.Instance["zoned"];
+            else if (data.IndexOf("P5") >= 0)
+                filename = Settings.Instance["zonee"];
+            if (filename != null)
+            {
+                //this.FlightPlanner.loadwpfile(filename);
+                //this.FlightPlanner.BUT_write_Click(null, null);
+                //this.FlightPlanner.BUT_read_Click(null, null);
+                //this.FlightData.BUT_quickmanual_Click(null, null);
+                //this.FlightData.BUT_ARM_Click(null, null);
+                //this.FlightData.BUT_quickauto_Click(null, null);
+            }
+        }
+
         private void MainV2_Load(object sender, EventArgs e)
         {
+            serialPort = new System.IO.Ports.SerialPort();
         }
+
+        public string portname { get; set; }
+        public int baudrate { get; set; }
+
+        public System.IO.Ports.SerialPort serialPort { get; set; }
+
+        private void cONNECTToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (port_conn)
+                {
+                    if (serialPort.IsOpen) serialPort.Close();
+                    cONNECTToolStripMenuItem.Text = "CONNECT";
+                    cONNECTToolStripMenuItem.Image = displayicons.connect;
+                    port_conn = false;
+                }
+                else
+                {
+                    if (serialPort == null)
+                    {
+                        serialPort = new System.IO.Ports.SerialPort();
+                    }
+                    if (serialPort.IsOpen) serialPort.Close();
+                    serialPort.PortName = this.portname;
+                    serialPort.BaudRate = 9600;
+                    serialPort.DataReceived += SerialPort_DataReceived;
+                    serialPort.Open();
+                    cONNECTToolStripMenuItem.Text = "DISCONNECT";
+                    cONNECTToolStripMenuItem.Image = displayicons.disconnect;
+                    port_conn = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR. SerialPort connection failed! " + this.portname, ex.Message);
+            }
+
+        }
+
+        private void comPortMenu_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.portname = comPortMenu.Text;
+        }
+
     }
 }

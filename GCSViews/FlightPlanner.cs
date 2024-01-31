@@ -7973,7 +7973,140 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         private void myButton1_Click(object sender, EventArgs e)
         {
-
+            savezonepoints("zonea.waypoints");
         }
+        private void savezonepoints(string file)
+        {
+            if (file != "")
+            {
+                Settings.Instance[file.Split('.')[0]] = file;
+                try
+                {
+                    StreamWriter sw = new StreamWriter(file);
+                    sw.WriteLine("QGC WPL 110");
+                    try
+                    {
+                        sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
+                                     double.Parse(TXT_homelat.Text).ToString("0.0000000", new CultureInfo("en-US")) +
+                                     "\t" +
+                                     double.Parse(TXT_homelng.Text).ToString("0.0000000", new CultureInfo("en-US")) +
+                                     "\t" +
+                                     (double.Parse(TXT_homealt.Text) / CurrentState.multiplieralt).ToString("0.000000", new CultureInfo("en-US")) +
+                                     "\t1");
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        sw.WriteLine("0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t1");
+                    }
+
+                    for (int a = 0; a < Commands.Rows.Count - 0; a++)
+                    {
+                        ushort mode = 0;
+
+                        if (Commands.Rows[a].Cells[0].Value.ToString() == "UNKNOWN")
+                        {
+                            mode = (ushort)Commands.Rows[a].Cells[Command.Index].Tag;
+                        }
+                        else
+                        {
+                            mode = getCmdID(Commands.Rows[a].Cells[Command.Index].Value.ToString());
+                        }
+
+                        sw.Write((a + 1)); // seq
+                        sw.Write("\t" + 0); // current
+                        sw.Write("\t" + ((int)Commands.Rows[a].Cells[Frame.Index].Value).ToString()); //frame
+                        sw.Write("\t" + mode);
+                        sw.Write("\t" +
+                                 double.Parse(Commands.Rows[a].Cells[Param1.Index].Value.ToString())
+                                     .ToString("0.00000000", new CultureInfo("en-US")));
+                        sw.Write("\t" +
+                                 double.Parse(Commands.Rows[a].Cells[Param2.Index].Value.ToString())
+                                     .ToString("0.00000000", new CultureInfo("en-US")));
+                        sw.Write("\t" +
+                                 double.Parse(Commands.Rows[a].Cells[Param3.Index].Value.ToString())
+                                     .ToString("0.00000000", new CultureInfo("en-US")));
+                        sw.Write("\t" +
+                                 double.Parse(Commands.Rows[a].Cells[Param4.Index].Value.ToString())
+                                     .ToString("0.00000000", new CultureInfo("en-US")));
+                        sw.Write("\t" +
+                                 double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString())
+                                     .ToString("0.00000000", new CultureInfo("en-US")));
+                        sw.Write("\t" +
+                                 double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString())
+                                     .ToString("0.00000000", new CultureInfo("en-US")));
+                        sw.Write("\t" +
+                                 (double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()) /
+                                  CurrentState.multiplieralt).ToString("0.000000", new CultureInfo("en-US")));
+                        sw.Write("\t" + 1);
+                        sw.WriteLine("");
+                    }
+
+                    sw.Close();
+
+                    lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
+                }
+                catch (Exception)
+                {
+                    CustomMessageBox.Show(Strings.ERROR);
+                }
+            }
+        }
+
+        private void myButton2_Click(object sender, EventArgs e)
+        {
+            savezonepoints("zoneb.waypoints");
+        }
+
+        private void myButton3_Click(object sender, EventArgs e)
+        {
+            savezonepoints("zonec.waypoints");
+        }
+
+        private void myButton4_Click(object sender, EventArgs e)
+        {
+            savezonepoints("zoned.waypoints");
+        }
+
+        private void myButton5_Click(object sender, EventArgs e)
+        {
+            savezonepoints("zonee.waypoints");
+        }
+
+        public void loadwpfile(string file)
+        {
+            if (File.Exists(file))
+            {
+                Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
+
+                string line = "";
+                using (var fstream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var fs = new StreamReader(fstream))
+                {
+                    line = fs.ReadLine();
+                }
+
+                if (line.StartsWith("{"))
+                {
+                    var format = MissionFile.ReadFile(file);
+
+                    var cmds = MissionFile.ConvertToLocationwps(format);
+
+                    processToScreen(cmds);
+
+                    writeKML();
+
+                    MainMap.ZoomAndCenterMarkers("WPOverlay");
+                }
+                else
+                {
+                    wpfilename = file;
+                    readQGC110wpfile(file);
+                }
+                lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+            }
+        }
+
     }
 }
+

@@ -49,6 +49,8 @@ namespace MissionPlanner
             this.MenuConfigTune = new System.Windows.Forms.ToolStripButton();
             this.MenuConnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripConnectionControl = new MissionPlanner.Controls.ToolStripConnectionControl();
+            this.comPortMenu = new System.Windows.Forms.ToolStripComboBox();
+            this.cONNECTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.status1 = new MissionPlanner.Controls.Status();
             this.menu = new MissionPlanner.Controls.MyButton();
@@ -69,7 +71,9 @@ namespace MissionPlanner
             this.MenuInitConfig,
             this.MenuConfigTune,
             this.MenuConnect,
-            this.toolStripConnectionControl});
+            this.toolStripConnectionControl,
+            this.comPortMenu,
+            this.cONNECTToolStripMenuItem});
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.ShowItemToolTips = true;
             this.MainMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MainMenu_ItemClicked);
@@ -169,6 +173,23 @@ namespace MissionPlanner
             this.toolStripConnectionControl.Name = "toolStripConnectionControl";
             this.toolStripConnectionControl.MouseLeave += new System.EventHandler(this.MainMenu_MouseLeave);
             // 
+            // comPortMenu
+            // 
+            this.comPortMenu.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.comPortMenu.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.comPortMenu.Name = "comPortMenu";
+            resources.ApplyResources(this.comPortMenu, "comPortMenu");
+            this.comPortMenu.SelectedIndexChanged += new System.EventHandler(this.comPortMenu_SelectedIndexChanged);
+            this.comPortMenu.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // cONNECTToolStripMenuItem
+            // 
+            this.cONNECTToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.cONNECTToolStripMenuItem.Image = global::MissionPlanner.Properties.Resources.light_connect_icon;
+            this.cONNECTToolStripMenuItem.Name = "cONNECTToolStripMenuItem";
+            resources.ApplyResources(this.cONNECTToolStripMenuItem, "cONNECTToolStripMenuItem");
+            this.cONNECTToolStripMenuItem.Click += new System.EventHandler(this.cONNECTToolStripMenuItem_Click_1);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.status1);
@@ -211,6 +232,7 @@ namespace MissionPlanner
 
         }
 
+
         #endregion
 
         public System.Windows.Forms.ToolStripButton MenuFlightData;
@@ -229,5 +251,7 @@ namespace MissionPlanner
         private System.Windows.Forms.ToolStripMenuItem connectionListToolStripMenuItem;
         public Controls.Status status1;
         private Controls.MyButton menu;
+        private System.Windows.Forms.ToolStripComboBox comPortMenu;
+        private System.Windows.Forms.ToolStripMenuItem cONNECTToolStripMenuItem;
     }
 }

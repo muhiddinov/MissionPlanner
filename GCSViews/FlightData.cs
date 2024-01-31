@@ -943,7 +943,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        private void BUT_ARM_Click(object sender, EventArgs e)
+        public void BUT_ARM_Click(object sender, EventArgs e)
         {
             if (!MainV2.comPort.BaseStream.IsOpen)
                 return;
@@ -1324,7 +1324,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        private void BUT_quickauto_Click(object sender, EventArgs e)
+        public void BUT_quickauto_Click(object sender, EventArgs e)
         {
             try
             {
@@ -1339,7 +1339,7 @@ namespace MissionPlanner.GCSViews
             ((Control) sender).Enabled = true;
         }
 
-        private void BUT_quickmanual_Click(object sender, EventArgs e)
+        public void BUT_quickmanual_Click(object sender, EventArgs e)
         {
             try
             {
@@ -6274,17 +6274,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        private void myButton7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void myButton8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void myButton6_Click(object sender, EventArgs e)
+        private void BTN_A_Click(object sender, EventArgs e)
         {
 
         }

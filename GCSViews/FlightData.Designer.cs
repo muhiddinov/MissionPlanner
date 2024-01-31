@@ -48,6 +48,11 @@ namespace MissionPlanner.GCSViews
             this.quickView1 = new MissionPlanner.Controls.QuickView();
             this.tabActions = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.BTN_B = new MissionPlanner.Controls.MyButton();
+            this.BTN_A = new MissionPlanner.Controls.MyButton();
+            this.BTN_C = new MissionPlanner.Controls.MyButton();
+            this.BTN_E = new MissionPlanner.Controls.MyButton();
+            this.BTN_D = new MissionPlanner.Controls.MyButton();
             this.BUT_SendMSG = new MissionPlanner.Controls.MyButton();
             this.BUT_abortland = new MissionPlanner.Controls.MyButton();
             this.modifyandSetLoiterRad = new MissionPlanner.Controls.ModifyandSet();
@@ -226,11 +231,6 @@ namespace MissionPlanner.GCSViews
             this.scriptChecker = new System.Windows.Forms.Timer(this.components);
             this.Messagetabtimer = new System.Windows.Forms.Timer(this.components);
             this.bindingSourceStatusTab = new System.Windows.Forms.BindingSource(this.components);
-            this.myButton4 = new MissionPlanner.Controls.MyButton();
-            this.myButton5 = new MissionPlanner.Controls.MyButton();
-            this.myButton6 = new MissionPlanner.Controls.MyButton();
-            this.myButton7 = new MissionPlanner.Controls.MyButton();
-            this.myButton8 = new MissionPlanner.Controls.MyButton();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
             this.MainH.Panel2.SuspendLayout();
@@ -733,11 +733,11 @@ namespace MissionPlanner.GCSViews
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.myButton8, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.myButton7, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.myButton6, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.myButton5, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.myButton4, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.BTN_B, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.BTN_A, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.BTN_C, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.BTN_E, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.BTN_D, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.BUT_SendMSG, 2, 4);
             this.tableLayoutPanel1.Controls.Add(this.BUT_abortland, 4, 4);
             this.tableLayoutPanel1.Controls.Add(this.modifyandSetLoiterRad, 4, 2);
@@ -762,6 +762,62 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            // 
+            // BTN_B
+            // 
+            this.BTN_B.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BTN_B.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BTN_B.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BTN_B, "BTN_B");
+            this.BTN_B.Name = "BTN_B";
+            this.BTN_B.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            this.toolTip1.SetToolTip(this.BTN_B, resources.GetString("BTN_B.ToolTip"));
+            this.BTN_B.UseVisualStyleBackColor = true;
+            // 
+            // BTN_A
+            // 
+            this.BTN_A.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BTN_A.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BTN_A.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BTN_A, "BTN_A");
+            this.BTN_A.Name = "BTN_A";
+            this.BTN_A.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            this.toolTip1.SetToolTip(this.BTN_A, resources.GetString("BTN_A.ToolTip"));
+            this.BTN_A.UseVisualStyleBackColor = true;
+            this.BTN_A.Click += new System.EventHandler(this.BTN_A_Click);
+            // 
+            // BTN_C
+            // 
+            this.BTN_C.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BTN_C.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BTN_C.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BTN_C, "BTN_C");
+            this.BTN_C.Name = "BTN_C";
+            this.BTN_C.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            this.toolTip1.SetToolTip(this.BTN_C, resources.GetString("BTN_C.ToolTip"));
+            this.BTN_C.UseVisualStyleBackColor = true;
+            // 
+            // BTN_E
+            // 
+            this.BTN_E.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BTN_E.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BTN_E.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BTN_E, "BTN_E");
+            this.BTN_E.Name = "BTN_E";
+            this.BTN_E.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            this.toolTip1.SetToolTip(this.BTN_E, resources.GetString("BTN_E.ToolTip"));
+            this.BTN_E.UseVisualStyleBackColor = true;
+            // 
+            // BTN_D
+            // 
+            this.BTN_D.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BTN_D.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BTN_D.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BTN_D, "BTN_D");
+            this.BTN_D.Name = "BTN_D";
+            this.BTN_D.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            this.toolTip1.SetToolTip(this.BTN_D, resources.GetString("BTN_D.ToolTip"));
+            this.BTN_D.UseVisualStyleBackColor = true;
             // 
             // BUT_SendMSG
             // 
@@ -2792,64 +2848,6 @@ namespace MissionPlanner.GCSViews
             // 
             this.bindingSourceStatusTab.DataSource = typeof(MissionPlanner.CurrentState);
             // 
-            // myButton4
-            // 
-            this.myButton4.ColorMouseDown = System.Drawing.Color.Empty;
-            this.myButton4.ColorMouseOver = System.Drawing.Color.Empty;
-            this.myButton4.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.myButton4, "myButton4");
-            this.myButton4.Name = "myButton4";
-            this.myButton4.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            this.toolTip1.SetToolTip(this.myButton4, resources.GetString("myButton4.ToolTip"));
-            this.myButton4.UseVisualStyleBackColor = true;
-            // 
-            // myButton5
-            // 
-            this.myButton5.ColorMouseDown = System.Drawing.Color.Empty;
-            this.myButton5.ColorMouseOver = System.Drawing.Color.Empty;
-            this.myButton5.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.myButton5, "myButton5");
-            this.myButton5.Name = "myButton5";
-            this.myButton5.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            this.toolTip1.SetToolTip(this.myButton5, resources.GetString("myButton5.ToolTip"));
-            this.myButton5.UseVisualStyleBackColor = true;
-            // 
-            // myButton6
-            // 
-            this.myButton6.ColorMouseDown = System.Drawing.Color.Empty;
-            this.myButton6.ColorMouseOver = System.Drawing.Color.Empty;
-            this.myButton6.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.myButton6, "myButton6");
-            this.myButton6.Name = "myButton6";
-            this.myButton6.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            this.toolTip1.SetToolTip(this.myButton6, resources.GetString("myButton6.ToolTip"));
-            this.myButton6.UseVisualStyleBackColor = true;
-            this.myButton6.Click += new System.EventHandler(this.myButton6_Click);
-            // 
-            // myButton7
-            // 
-            this.myButton7.ColorMouseDown = System.Drawing.Color.Empty;
-            this.myButton7.ColorMouseOver = System.Drawing.Color.Empty;
-            this.myButton7.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.myButton7, "myButton7");
-            this.myButton7.Name = "myButton7";
-            this.myButton7.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            this.toolTip1.SetToolTip(this.myButton7, resources.GetString("myButton7.ToolTip"));
-            this.myButton7.UseVisualStyleBackColor = true;
-            this.myButton7.Click += new System.EventHandler(this.myButton7_Click);
-            // 
-            // myButton8
-            // 
-            this.myButton8.ColorMouseDown = System.Drawing.Color.Empty;
-            this.myButton8.ColorMouseOver = System.Drawing.Color.Empty;
-            this.myButton8.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.myButton8, "myButton8");
-            this.myButton8.Name = "myButton8";
-            this.myButton8.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            this.toolTip1.SetToolTip(this.myButton8, resources.GetString("myButton8.ToolTip"));
-            this.myButton8.UseVisualStyleBackColor = true;
-            this.myButton8.Click += new System.EventHandler(this.myButton8_Click);
-            // 
             // FlightData
             // 
             this.Controls.Add(this.MainH);
@@ -3151,10 +3149,10 @@ namespace MissionPlanner.GCSViews
         private Controls.AuxOptions auxOptions6;
         private Controls.AuxOptions auxOptions7;
         private ToolStripMenuItem jumpToTagToolStripMenuItem;
-        private Controls.MyButton myButton8;
-        private Controls.MyButton myButton7;
-        private Controls.MyButton myButton6;
-        private Controls.MyButton myButton5;
-        private Controls.MyButton myButton4;
+        public Controls.MyButton BTN_B;
+        public Controls.MyButton BTN_A;
+        public Controls.MyButton BTN_C;
+        public Controls.MyButton BTN_E;
+        public Controls.MyButton BTN_D;
     }
 }

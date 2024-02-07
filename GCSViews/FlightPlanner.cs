@@ -51,6 +51,7 @@ using Point = System.Drawing.Point;
 using Resources = MissionPlanner.Properties.Resources;
 using Newtonsoft.Json;
 using MissionPlanner.ArduPilot.Mavlink;
+using IronPython.Runtime.Exceptions;
 
 namespace MissionPlanner.GCSViews
 {
@@ -7974,14 +7975,40 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void myButton1_Click(object sender, EventArgs e)
         {
             savezonepoints("zonea.waypoints");
+            writeKML();
         }
         private void savezonepoints(string file)
         {
             if (file != "")
             {
-                Settings.Instance[file.Split('.')[0]] = file;
+                Settings.Instance[file.Split('.')[0].Trim()] = file;
                 try
                 {
+                    if (file.EndsWith(".mission"))
+                    {
+                        var list = GetCommandList();
+                        Locationwp home = new Locationwp();
+                        try
+                        {
+                            home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+                            home.lat = (double.Parse(TXT_homelat.Text));
+                            home.lng = (double.Parse(TXT_homelng.Text));
+                            home.alt = (float.Parse(TXT_homealt.Text) /
+                                        CurrentState.multiplieralt); // use saved home
+                        }
+                        catch
+                        {
+                        }
+
+                        list.Insert(0, home);
+
+                        var format =
+                            MissionFile.ConvertFromLocationwps(list, (byte)(altmode)CMB_altmode.SelectedValue);
+
+                        MissionFile.WriteFile(file, format);
+                        return;
+                    }
+
                     StreamWriter sw = new StreamWriter(file);
                     sw.WriteLine("QGC WPL 110");
                     try
@@ -8056,54 +8083,68 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void myButton2_Click(object sender, EventArgs e)
         {
             savezonepoints("zoneb.waypoints");
+            writeKML();
         }
 
         private void myButton3_Click(object sender, EventArgs e)
         {
             savezonepoints("zonec.waypoints");
+            writeKML();
         }
 
         private void myButton4_Click(object sender, EventArgs e)
         {
             savezonepoints("zoned.waypoints");
+            writeKML();
         }
 
         private void myButton5_Click(object sender, EventArgs e)
         {
             savezonepoints("zonee.waypoints");
+            writeKML();
         }
 
         public void loadwpfile(string file)
         {
-            if (File.Exists(file))
+            //string file = Settings.Instance[path];
+            try
             {
-                Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
-
-                string line = "";
-                using (var fstream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                using (var fs = new StreamReader(fstream))
+                if (File.Exists(file))
                 {
-                    line = fs.ReadLine();
+                    string line = "";
+                    using (var fstream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (var fs = new StreamReader(fstream))
+                    {
+                        line = fs.ReadLine();
+                    }
+
+                    if (line.StartsWith("{"))
+                    {
+                        var format = MissionFile.ReadFile(file);
+
+                        var cmds = MissionFile.ConvertToLocationwps(format);
+
+                        processToScreen(cmds);
+
+                        writeKML();
+
+                        MainMap.ZoomAndCenterMarkers("WPOverlay");
+                    }
+                    else
+                    {
+                        wpfilename = file;
+                        readQGC110wpfile(file);
+                    }
+                    lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
                 }
-
-                if (line.StartsWith("{"))
-                {
-                    var format = MissionFile.ReadFile(file);
-
-                    var cmds = MissionFile.ConvertToLocationwps(format);
-
-                    processToScreen(cmds);
-
-                    writeKML();
-
-                    MainMap.ZoomAndCenterMarkers("WPOverlay");
-                }
-                else
-                {
-                    wpfilename = file;
-                    readQGC110wpfile(file);
-                }
-                lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+            }
+            catch (FileExistsException ex) 
+            {
+                MessageBox.Show("File not exists!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

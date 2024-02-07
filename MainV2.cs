@@ -918,7 +918,7 @@ namespace MissionPlanner
             try
             {
                 log.Info("Create FD");
-                FlightData = new GCSViews.FlightData();
+                FlightData = new GCSViews.FlightData(this);
                 log.Info("Create FP");
                 FlightPlanner = new GCSViews.FlightPlanner();
                 //Configuration = new GCSViews.ConfigurationView.Setup();
@@ -1725,41 +1725,41 @@ namespace MissionPlanner
                 }
 
                 // check for newer firmware
-                if (showui)
-                    Task.Run(() =>
-                    {
-                        try
-                        {
-                            string[] fields1 = comPort.MAV.VersionString.Split(' ');
+                //if (showui)
+                //    Task.Run(() =>
+                //    {
+                //        try
+                //        {
+                //            string[] fields1 = comPort.MAV.VersionString.Split(' ');
 
-                            var softwares = APFirmware.GetReleaseNewest(APFirmware.RELEASE_TYPES.OFFICIAL);
+                //            var softwares = APFirmware.GetReleaseNewest(APFirmware.RELEASE_TYPES.OFFICIAL);
 
-                            foreach (var item in softwares)
-                            {
-                            // check primare firmware type. ie arudplane, arducopter
-                            if (fields1[0].ToLower().Contains(item.VehicleType.ToLower()))
-                                {
-                                    Version ver1 = VersionDetection.GetVersion(comPort.MAV.VersionString);
-                                    Version ver2 = item.MavFirmwareVersion;
+                //            foreach (var item in softwares)
+                //            {
+                //            // check primare firmware type. ie arudplane, arducopter
+                //            if (fields1[0].ToLower().Contains(item.VehicleType.ToLower()))
+                //                {
+                //                    Version ver1 = VersionDetection.GetVersion(comPort.MAV.VersionString);
+                //                    Version ver2 = item.MavFirmwareVersion;
 
-                                    if (ver2 > ver1)
-                                    {
-                                        Common.MessageShowAgain(Strings.NewFirmware + "-" + item.VehicleType + " " + ver2,
-                                            Strings.NewFirmwareA + item.VehicleType + " " + ver2 + Strings.Pleaseup +
-                                            "[link;https://discuss.ardupilot.org/tags/stable-release;Release Notes]");
-                                        break;
-                                    }
+                //                    if (ver2 > ver1)
+                //                    {
+                //                        Common.MessageShowAgain(Strings.NewFirmware + "-" + item.VehicleType + " " + ver2,
+                //                            Strings.NewFirmwareA + item.VehicleType + " " + ver2 + Strings.Pleaseup +
+                //                            "[link;https://discuss.ardupilot.org/tags/stable-release;Release Notes]");
+                //                        break;
+                //                    }
 
-                                // check the first hit only
-                                break;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Error(ex);
-                        }
-                    });
+                //                // check the first hit only
+                //                break;
+                //                }
+                //            }
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            log.Error(ex);
+                //        }
+                //    });
 
                 this.BeginInvokeIfRequired(() =>
                 {
@@ -1771,7 +1771,7 @@ namespace MissionPlanner
                     Settings.Instance[_connectionControl.CMB_serialport.Text.Replace(" ","_") + "_BAUD"] =
                         _connectionControl.CMB_baudrate.Text;
 
-                    this.Text = titlebar + " " + comPort.MAV.VersionString;
+                    //this.Text = titlebar + " " + comPort.MAV.VersionString;
 
                     // refresh config window if needed
                     if (MyView.current != null && showui)
@@ -3995,6 +3995,7 @@ namespace MissionPlanner
         private void MainV2_Resize(object sender, EventArgs e)
         {
             // mono - resize is called before the control is created
+            this.Text = "Mission Planner - Changed By AKA";
             if (MyView != null)
                 log.Info("myview width " + MyView.Width + " height " + MyView.Height);
 
@@ -4784,17 +4785,85 @@ namespace MissionPlanner
                 filename = Settings.Instance["zonee"];
             if (filename != null)
             {
-                //this.FlightPlanner.loadwpfile(filename);
-                //this.FlightPlanner.BUT_write_Click(null, null);
-                //this.FlightPlanner.BUT_read_Click(null, null);
-                //this.FlightData.BUT_quickmanual_Click(null, null);
-                //this.FlightData.BUT_ARM_Click(null, null);
-                //this.FlightData.BUT_quickauto_Click(null, null);
+                SerialCMD(filename, sender, e);
+            } else
+            {
+                log.Info("Zone has not save!");
             }
+        }
+
+        private void SerialCMD (string filename, object sender, EventArgs e)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                try
+                {
+                    this.FlightPlanner.loadwpfile(filename);
+                    this.FlightPlanner.BUT_write_Click(null, null);
+                    this.FlightPlanner.BUT_read_Click(null, null);
+                    this.FlightData.BUT_quickmanual_Click(null, null);
+                    this.FlightData.BUT_ARM_Click(null, null);
+                    this.FlightData.BUT_quickauto_Click(null, null);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            });
+        }
+
+        public void BTN_A_Click(object sender, EventArgs e)
+        {
+            this.FlightPlanner.loadwpfile("zonea.waypoints");
+            this.FlightPlanner.BUT_write_Click(sender, e);
+            this.FlightPlanner.BUT_read_Click(sender, e);
+            this.FlightData.BUT_quickmanual_Click(sender, e);
+            this.FlightData.BUT_ARM_Click(sender, e);
+            this.FlightData.BUT_quickauto_Click(sender, e);
+        }
+
+        public void BTN_B_Click(object sender, EventArgs e)
+        {
+            this.FlightPlanner.loadwpfile("zoneb.waypoints");
+            this.FlightPlanner.BUT_write_Click(sender, e);
+            this.FlightPlanner.BUT_read_Click(sender, e);
+            this.FlightData.BUT_quickmanual_Click(sender, e);
+            this.FlightData.BUT_ARM_Click(sender, e);
+            this.FlightData.BUT_quickauto_Click(sender, e);
+        }
+
+        public void BTN_C_Click(object sender, EventArgs e)
+        {
+            this.FlightPlanner.loadwpfile("zonec.waypoints");
+            this.FlightPlanner.BUT_write_Click(sender, e);
+            this.FlightPlanner.BUT_read_Click(sender, e);
+            this.FlightData.BUT_quickmanual_Click(sender, e);
+            this.FlightData.BUT_ARM_Click(sender, e);
+            this.FlightData.BUT_quickauto_Click(sender, e);
+        }
+
+        public void BTN_D_Click(object sender, EventArgs e)
+        {
+            this.FlightPlanner.loadwpfile("zoned.waypoints");
+            this.FlightPlanner.BUT_write_Click(sender, e);
+            this.FlightPlanner.BUT_read_Click(sender, e);
+            this.FlightData.BUT_quickmanual_Click(sender, e);
+            this.FlightData.BUT_ARM_Click(sender, e);
+            this.FlightData.BUT_quickauto_Click(sender, e);
+        }
+        public void BTN_E_Click(object sender, EventArgs e)
+        {
+            this.FlightPlanner.loadwpfile("zonee.waypoints");
+            this.FlightPlanner.BUT_write_Click(sender, e);
+            this.FlightPlanner.BUT_read_Click(sender, e);
+            this.FlightData.BUT_quickmanual_Click(sender, e);
+            this.FlightData.BUT_ARM_Click(sender, e);
+            this.FlightData.BUT_quickauto_Click(sender, e);
         }
 
         private void MainV2_Load(object sender, EventArgs e)
         {
+            this.Text = "Mission Planner - Changed By AKA";
             serialPort = new System.IO.Ports.SerialPort();
         }
 
@@ -4807,6 +4876,7 @@ namespace MissionPlanner
         {
             try
             {
+                MenuFlightPlanner_Click(sender, e);
                 if (port_conn)
                 {
                     if (serialPort.IsOpen) serialPort.Close();

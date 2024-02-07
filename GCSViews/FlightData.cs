@@ -221,12 +221,18 @@ namespace MissionPlanner.GCSViews
             {10, "<10m" },
             {11, "<3m" }
         };
-
-        public FlightData()
+        public MainV2 main = null;
+        public FlightData(MainV2 mainV2)
         {
+            main = mainV2;
             log.Info("Ctor Start");
 
             InitializeComponent();
+            this.BTN_A.Click += this.main.BTN_A_Click;
+            this.BTN_B.Click += this.main.BTN_B_Click;
+            this.BTN_C.Click += this.main.BTN_C_Click;
+            this.BTN_D.Click += this.main.BTN_D_Click;
+            this.BTN_E.Click += this.main.BTN_E_Click;
 
             log.Info("Components Done");
 
@@ -1328,7 +1334,8 @@ namespace MissionPlanner.GCSViews
         {
             try
             {
-                ((Control) sender).Enabled = false;
+                if (sender != null)
+                    ((Control) sender).Enabled = false;
                 MainV2.comPort.setMode("Auto");
             }
             catch
@@ -1336,14 +1343,16 @@ namespace MissionPlanner.GCSViews
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
 
-            ((Control) sender).Enabled = true;
+            if (sender != null)
+                ((Control) sender).Enabled = true;
         }
 
         public void BUT_quickmanual_Click(object sender, EventArgs e)
         {
             try
             {
-                ((Control) sender).Enabled = false;
+                if (sender !=  null)
+                    ((Control)sender).Enabled = false;
                 if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduPlane ||
                     MainV2.comPort.MAV.cs.firmware == Firmwares.Ateryx ||
                     MainV2.comPort.MAV.cs.firmware == Firmwares.ArduRover ||
@@ -1354,8 +1363,8 @@ namespace MissionPlanner.GCSViews
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
-
-            ((Control) sender).Enabled = true;
+            if (sender != null)
+                ((Control) sender).Enabled = true;
         }
 
         private void BUT_quickrtl_Click(object sender, EventArgs e)
@@ -2562,6 +2571,7 @@ namespace MissionPlanner.GCSViews
 
             //thisthread.Join();
         }
+
 
         private void FlightData_Load(object sender, EventArgs e)
         {
@@ -6274,7 +6284,27 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        private void BTN_A_Click(object sender, EventArgs e)
+        private void BTN_A_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_B_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_C_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_D_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_E_Click(object sender, EventArgs e)
         {
 
         }
